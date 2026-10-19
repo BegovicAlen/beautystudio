@@ -1,0 +1,2 @@
+namespace BeautyStudio.Api.Domain;
+public sealed class GalleryItem { public Guid Id { get; set; } public required string Title { get; set; } public string Description { get; set; } = string.Empty; public required string ImageUrl { get; set; } public int CategoryId { get; set; } public ServiceCategory ServiceCategory { get; set; } = null!; public bool IsActive { get; set; } = true; public DateTime CreatedAtUtc { get; set; } = DateTime.UtcNow; }

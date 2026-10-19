@@ -1,0 +1,3 @@
+using BeautyStudio.Api.Services; using Microsoft.AspNetCore.Authorization; using Microsoft.AspNetCore.Mvc;
+namespace BeautyStudio.Api.Controllers;
+[ApiController, Route("api/stripe/webhook"), AllowAnonymous] public sealed class StripeWebhookController(PaymentService payments) : ControllerBase { [HttpPost] public async Task<IActionResult> Receive(CancellationToken ct) { using var reader=new StreamReader(Request.Body); var body=await reader.ReadToEndAsync(ct); var signature=Request.Headers["Stripe-Signature"].ToString(); if(string.IsNullOrWhiteSpace(signature)) return BadRequest(); await payments.HandleWebhookAsync(body,signature,ct); return Ok(); } }
